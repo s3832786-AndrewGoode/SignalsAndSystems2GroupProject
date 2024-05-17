@@ -18,8 +18,13 @@ function convertAudioToMelSpec(audioDir, person)
             audioFile = fullfile(audioDir, [person, '_0', num2str(i + 5), '_mic1.flac']);
         end
         
-        % Reading the Audio File 
-        [y,fs] = audioread(audioFile);
+        try
+            % Reading the Audio File 
+            [y,fs] = audioread(audioFile);
+        catch
+            warning(['File ', audioFile, ' not found.']);
+            continue;
+        end
        
         % Parameters For the Mel Spectrogram
         % Window Length
