@@ -52,7 +52,7 @@ numClasses = numel(classNames);
 
 layers = [
     layersTransfer
-    fullyConnectedLayer(numClasses, 'WeightLearnRateFactor', 25,'BiasLearnRateFactor', 25)
+    fullyConnectedLayer(numClasses, 'WeightLearnRateFactor', 20,'BiasLearnRateFactor', 20)
     softmaxLayer
     classificationLayer];
 
@@ -62,9 +62,9 @@ augimdsValidation = augmentedImageDatastore(inputSize(1:2),imdsValidation);
 
 %% Set training options
 opts = trainingOptions('sgdm', ... 
-    'MiniBatchSize', 10, ... 
-    'InitialLearnRate', 1e-5, ... 
-    'MaxEpochs', 8, ...
+    'MiniBatchSize', 6, ... 
+    'InitialLearnRate', 1e-4, ... 
+    'MaxEpochs', 12, ...
     'Shuffle', 'every-epoch', ... 
     'Plots', 'training-progress', ... 
     'ValidationData', augimdsValidation, ... 
@@ -80,3 +80,13 @@ netTransfer = trainNetwork(augimdsTrain, layers, opts);
 %% Calculate accuracy
 YValidation = imdsValidation.Labels;
 accuracy = mean(YPred == YValidation);
+
+%% Test classification of new audio samples
+Test1 = imread("./p244Testing/melSpectrogram1.png");
+Test2 = imread("./p374Testing/melSpectrogram1.png");
+
+Test1 = imresize(Test1, inputSize(1:2));
+Test2 = imresize(Test2, inputSize(1:2));
+
+[Y1,TestPrediction1] = classify(netTransfer, Test1);
+[Y2,TestPrediction2] = classify(netTransfer, Test2);
