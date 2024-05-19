@@ -23,20 +23,19 @@ close all;
 clc;
 
 %% Convert data to MEL spectrogram
-convertAudioToMelSpec('./Voice Dataset/p244', 'p244');
-convertAudioToMelSpec('./Voice Dataset/p286', 'p286');
-convertAudioToMelSpec('./Voice Dataset/p326', 'p326');
-convertAudioToMelSpec('./Voice Dataset/p335', 'p335');
-convertAudioToMelSpec('./Voice Dataset/p361', 'p361');
-convertAudioToMelSpec('./Voice Dataset/p374', 'p374');
+convertAudioToMelSpec('./Voice Dataset/UnknownVoices', 'UnknownVoices');
+convertAudioToMelSpec('./Voice Dataset/Andrew', 'Andrew');
+convertAudioToMelSpec('./Voice Dataset/Ash', 'Ash');
+convertAudioToMelSpec('./Voice Dataset/Ashwin', 'Ashwin');
+convertAudioToMelSpec('./Voice Dataset/Rory', 'Rory');
 
 %% Load data
 imds = imageDatastore('mel_spectrograms', ...
-    'IncludeSubfolders',true, ...
-    'LabelSource','foldernames');
+    'IncludeSubfolders', true, ...
+    'LabelSource', 'foldernames');
 
 %% Divide the data into training and validation datasets. 
-[imdsTrain,imdsValidation] = splitEachLabel(imds,0.7,'randomized');
+[imdsTrain, imdsValidation] = splitEachLabel(imds, 0.7, 'randomized');
 
 %% Load Pretrained Network
 net = alexnet;
@@ -75,7 +74,7 @@ opts = trainingOptions('sgdm', ...
 netTransfer = trainNetwork(augimdsTrain, layers, opts);
 
 %% Classify Validation Images
-[YPred,scores] = classify(netTransfer,augimdsValidation);
+[YPred, scores] = classify(netTransfer, augimdsValidation);
 
 %% Calculate accuracy
 YValidation = imdsValidation.Labels;
@@ -88,5 +87,5 @@ Test2 = imread("./p374Testing/melSpectrogram1.png");
 Test1 = imresize(Test1, inputSize(1:2));
 Test2 = imresize(Test2, inputSize(1:2));
 
-[Y1,TestPrediction1] = classify(netTransfer, Test1);
-[Y2,TestPrediction2] = classify(netTransfer, Test2);
+[Y1, TestPrediction1] = classify(netTransfer, Test1);
+[Y2, TestPrediction2] = classify(netTransfer, Test2);
