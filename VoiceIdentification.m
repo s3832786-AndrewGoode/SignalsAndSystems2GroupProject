@@ -80,12 +80,5 @@ netTransfer = trainNetwork(augimdsTrain, layers, opts);
 YValidation = imdsValidation.Labels;
 accuracy = mean(YPred == YValidation);
 
-%% Test classification of new audio samples
-Test1 = imread("./p244Testing/melSpectrogram1.png");
-Test2 = imread("./p374Testing/melSpectrogram1.png");
-
-Test1 = imresize(Test1, inputSize(1:2));
-Test2 = imresize(Test2, inputSize(1:2));
-
-[Y1, TestPrediction1] = classify(netTransfer, Test1);
-[Y2, TestPrediction2] = classify(netTransfer, Test2);
+%% Save trained alexnet model to .mat file
+save('voiceModel.mat', 'netTransfer');
