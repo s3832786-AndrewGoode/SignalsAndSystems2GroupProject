@@ -18,16 +18,16 @@
 % Sentences taken from VCTK Corpus dataset:
 %   006 - 024
 
-clear all;
+clear;
 close all;
 clc;
 
-%% Convert data to MEL spectrogram
-convertAudioToMelSpec('./Voice Dataset/UnknownVoices', 'UnknownVoices');
-convertAudioToMelSpec('./Voice Dataset/Andrew', 'Andrew');
-convertAudioToMelSpec('./Voice Dataset/Ash', 'Ash');
-convertAudioToMelSpec('./Voice Dataset/Ashwin', 'Ashwin');
-convertAudioToMelSpec('./Voice Dataset/Rory', 'Rory');
+%% Convert data to MEL spectrogram - ONLY UNCOMMENT IF DATASET NEEDS TO BE CONVERTED
+% convertAudioToMelSpec('./Voice Dataset/UnknownVoices', 'UnknownVoices');
+% convertAudioToMelSpec('./Voice Dataset/Andrew', 'Andrew');
+% convertAudioToMelSpec('./Voice Dataset/Ash', 'Ash');
+% convertAudioToMelSpec('./Voice Dataset/Ashwin', 'Ashwin');
+% convertAudioToMelSpec('./Voice Dataset/Rory', 'Rory');
 
 %% Load data
 imds = imageDatastore('mel_spectrograms', ...
@@ -51,19 +51,19 @@ numClasses = numel(classNames);
 
 layers = [
     layersTransfer
-    fullyConnectedLayer(numClasses, 'WeightLearnRateFactor', 20,'BiasLearnRateFactor', 20)
+    fullyConnectedLayer(numClasses, 'WeightLearnRateFactor', 20, 'BiasLearnRateFactor', 20)
     softmaxLayer
     classificationLayer];
 
 %% Reshape datasets to fit input size
-augimdsTrain = augmentedImageDatastore(inputSize(1:2),imdsTrain);
-augimdsValidation = augmentedImageDatastore(inputSize(1:2),imdsValidation);
+augimdsTrain = augmentedImageDatastore(inputSize(1:2), imdsTrain);
+augimdsValidation = augmentedImageDatastore(inputSize(1:2), imdsValidation);
 
 %% Set training options
 opts = trainingOptions('sgdm', ... 
-    'MiniBatchSize', 6, ... 
+    'MiniBatchSize', 19, ... 
     'InitialLearnRate', 1e-4, ... 
-    'MaxEpochs', 12, ...
+    'MaxEpochs', 6, ...
     'Shuffle', 'every-epoch', ... 
     'Plots', 'training-progress', ... 
     'ValidationData', augimdsValidation, ... 
