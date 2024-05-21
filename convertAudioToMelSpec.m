@@ -10,7 +10,7 @@ function convertAudioToMelSpec(audioDir, person)
     
     % Loop through each audio file
     for i = 1:size(D, 1)
-        if endsWith(D(i).name, ".flac", 'IgnoreCase', true)
+        if endsWith(D(i).name, ".flac", 'IgnoreCase', true) || endsWith(D(i).name, ".m4a", 'IgnoreCase', true)
             try
                 % Reading the Audio File 
                 [y,fs] = audioread([audioDir, '/', D(i).name]);
