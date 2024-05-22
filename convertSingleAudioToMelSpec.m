@@ -1,5 +1,5 @@
 function convertSingleAudioToMelSpec(audioDir, person)
-    outputDir = ['./Testing/', person];
+    outputDir = './Testing/';
     
     % Create output dir
     if ~exist(outputDir, 'dir')
@@ -28,7 +28,7 @@ function convertSingleAudioToMelSpec(audioDir, person)
     set(gca, 'LooseInset', get(gca, 'TightInset'));
     set(gca, 'Position', [0 0 1 1], 'Units', 'normalized');
 
-    outputFile = fullfile(outputDir, ['melSpectrogram', num2str(i),'.png']);
+    outputFile = fullfile(outputDir, [person, '.png']);
     saveas(gcf, outputFile);
 
     close gcf;
