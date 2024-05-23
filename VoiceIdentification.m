@@ -22,12 +22,12 @@ clear;
 close all;
 clc;
 
-%% Convert data to MEL spectrogram - ONLY UNCOMMENT IF DATASET NEEDS TO BE CONVERTED
-% convertAudioToMelSpec('./Voice Dataset/UnknownVoices', 'UnknownVoices');
-% convertAudioToMelSpec('./Voice Dataset/Andrew', 'Andrew');
-% convertAudioToMelSpec('./Voice Dataset/Ash', 'Ash');
-% convertAudioToMelSpec('./Voice Dataset/Ashwin', 'Ashwin');
-% convertAudioToMelSpec('./Voice Dataset/Rory', 'Rory');
+%% Convert data to MEL spectrogram
+convertAudioToMelSpec('./Voice Dataset/UnknownVoices', 'UnknownVoices');
+convertAudioToMelSpec('./Voice Dataset/Andrew', 'Andrew');
+convertAudioToMelSpec('./Voice Dataset/Ash', 'Ash');
+convertAudioToMelSpec('./Voice Dataset/Ashwin', 'Ashwin');
+convertAudioToMelSpec('./Voice Dataset/Rory', 'Rory');
 
 %% Load data
 imds = imageDatastore('mel_spectrograms', ...
